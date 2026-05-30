@@ -1,0 +1,1767 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SentinelIQ AI | Predictive Shift-Safety Governance Platform for UK Petrol Forecourts</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Sora:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+
+:root{
+  /* SentinelIQ AI  Cybersecurity / Safety Tech Palette */
+  --blue:#0075C4;
+  --blue-light:#00AEEF;
+  --blue-dim:#005999;
+  --blue-dark:#003366;
+  --blue-deeper:#001A33;
+
+  --accent:#00C2CC;
+  --accent-light:#B3F0F3;
+  --accent-dim:#00A0AA;
+
+  /* Nav / Footer BG Deep Navy */
+  --nav-bg:#001A33;
+  --footer-bg:#00101F;
+
+  /* Page Backgrounds */
+  --bg-white:#F4F8FC;
+  --bg-light:#E8F2FA;
+  --bg-section:#D0E8F5;
+  --bg-card:#FFFFFF;
+
+  --card-border:rgba(0,117,196,0.18);
+  --card-border-strong:rgba(0,117,196,0.38);
+
+  --text-dark:#07192E;
+  --text-mid:#1A3A5C;
+  --text-muted:#4A6B8A;
+  --text-light:#7A99B8;
+  --white:#FFFFFF;
+
+  --nav-h:72px;
+  --max-w:1200px;
+  --font:'Plus Jakarta Sans',sans-serif;
+  --display:'Sora',sans-serif;
+  --mono:'IBM Plex Mono',monospace;
+  --ease:cubic-bezier(0.4,0,0.2,1);
+  --ease-out:cubic-bezier(0,0,0.2,1);
+}
+
+body{font-family:var(--font);color:var(--text-dark);background:var(--bg-white);overflow-x:hidden;}
+
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-track{background:var(--bg-light);}
+::-webkit-scrollbar-thumb{background:var(--blue);border-radius:2px;}
+
+img{display:block;max-width:100%;}
+
+/* ─── NAVBAR ─────────────────────────────────────────── */
+.navbar{
+  position:fixed;top:0;left:0;width:100%;height:var(--nav-h);
+  background:var(--nav-bg);backdrop-filter:blur(20px);
+  border-bottom:1px solid rgba(0,194,204,0.2);
+  z-index:1000;display:flex;align-items:center;
+  padding:0 clamp(16px,5vw,60px);
+  justify-content:space-between;
+  transition:border-color 0.3s;
+  box-shadow:0 2px 24px rgba(0,26,51,0.6);
+}
+.nav-logo{
+  font-family:var(--display);font-size:18px;font-weight:800;
+  color:var(--white);letter-spacing:-0.3px;
+  display:flex;align-items:center;gap:12px;
+  cursor:pointer;text-decoration:none;flex-shrink:0;
+}
+.nav-logo-icon{
+  width:40px;height:40px;
+  background:linear-gradient(135deg,var(--blue),var(--accent));
+  border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+  box-shadow:0 4px 14px rgba(0,194,204,0.35);
+  border:1px solid rgba(0,194,204,0.4);
+}
+.nav-logo-icon svg{width:22px;height:22px;fill:none;stroke:#fff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.nav-logo-text{display:flex;flex-direction:column;line-height:1;}
+.nav-logo-text span{font-size:10px;font-family:var(--mono);font-weight:500;color:var(--accent-light);letter-spacing:2px;text-transform:uppercase;margin-top:3px;opacity:0.85;}
+
+.nav-links{display:flex;align-items:center;gap:4px;list-style:none;}
+.nav-links li button{
+  background:none;border:none;
+  color:rgba(255,255,255,0.85);
+  font-size:11px;font-weight:600;
+  padding:8px 14px;border-radius:7px;
+  transition:all 0.22s var(--ease);
+  cursor:pointer;font-family:var(--mono);
+  letter-spacing:0.8px;text-transform:uppercase;
+  position:relative;white-space:nowrap;
+}
+.nav-links li button:hover{color:#fff;background:rgba(0,194,204,0.15);}
+.nav-links li button.active{color:#fff;background:rgba(0,194,204,0.2);}
+.nav-links li button.active::after{
+  content:'';position:absolute;bottom:5px;left:50%;
+  transform:translateX(-50%);width:14px;height:2px;
+  background:var(--accent);border-radius:2px;
+}
+
+.nav-right{display:flex;align-items:center;gap:10px;}
+.btn-demo-nav{
+  background:linear-gradient(135deg,var(--accent),var(--blue-light));
+  color:var(--blue-deeper);border:none;padding:9px 20px;border-radius:8px;
+  font-size:11px;font-weight:700;cursor:pointer;
+  transition:all 0.22s;font-family:var(--mono);
+  letter-spacing:0.8px;text-transform:uppercase;white-space:nowrap;
+  box-shadow:0 2px 10px rgba(0,194,204,0.35);
+}
+.btn-demo-nav:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(0,194,204,0.5);}
+
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:6px;background:none;border:none;flex-shrink:0;}
+.hamburger span{width:22px;height:2px;background:#fff;border-radius:2px;transition:0.3s;display:block;}
+.hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+.hamburger.open span:nth-child(2){opacity:0;}
+.hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+
+.mobile-nav{
+  display:none;position:fixed;top:var(--nav-h);left:0;width:100%;
+  background:var(--blue-deeper);backdrop-filter:blur(20px);
+  padding:12px 20px 20px;flex-direction:column;gap:2px;
+  z-index:999;border-bottom:1px solid rgba(0,194,204,0.15);
+  animation:slideDown 0.25s var(--ease-out);
+}
+@keyframes slideDown{from{opacity:0;transform:translateY(-10px);}to{opacity:1;transform:translateY(0);}}
+.mobile-nav.open{display:flex;}
+.mobile-nav button{
+  background:none;border:none;color:rgba(255,255,255,0.8);
+  font-size:13px;font-weight:600;padding:13px 12px;
+  border-bottom:1px solid rgba(255,255,255,0.08);
+  cursor:pointer;font-family:var(--mono);text-align:left;
+  text-transform:uppercase;letter-spacing:1px;
+  transition:color 0.2s,background 0.2s;border-radius:6px;
+}
+.mobile-nav button:hover{color:#fff;background:rgba(0,194,204,0.15);}
+.mobile-nav .mob-cta{
+  margin-top:8px;background:linear-gradient(135deg,var(--accent),var(--blue-light));
+  color:var(--blue-deeper);border:none;padding:13px;
+  border-radius:8px;font-weight:700;font-size:12px;
+  letter-spacing:1px;text-transform:uppercase;cursor:pointer;
+  font-family:var(--mono);
+}
+
+/* ─── PAGE SYSTEM ─────────────────────────────────────── */
+.page{display:none;min-height:100vh;padding-top:var(--nav-h);}
+.page.active{display:block;animation:pgIn 0.35s var(--ease);}
+@keyframes pgIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+
+/* ─── SECTION COMMONS ─────────────────────────────────── */
+.label-tag{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:var(--mono);font-size:10px;font-weight:600;
+  letter-spacing:3px;text-transform:uppercase;
+  color:var(--blue-dim);margin-bottom:14px;
+}
+.label-tag::before{content:'';width:20px;height:1px;background:var(--blue);}
+.label-tag-white{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:var(--mono);font-size:10px;font-weight:600;
+  letter-spacing:3px;text-transform:uppercase;
+  color:var(--accent-light);margin-bottom:14px;
+}
+.label-tag-white::before{content:'';width:20px;height:1px;background:var(--accent);}
+
+.section-h2{
+  font-family:var(--display);font-size:clamp(28px,3.5vw,52px);
+  font-weight:800;line-height:1.1;letter-spacing:-0.8px;
+  margin-bottom:10px;
+}
+.section-h2.blue-txt{color:var(--blue-dark);}
+.section-h2.dark{color:var(--text-dark);}
+.section-h2.white{color:var(--white);}
+
+.section-divider{width:56px;height:3px;margin:16px 0 28px;border-radius:2px;}
+.divider-blue{background:linear-gradient(90deg,var(--blue),transparent);}
+.divider-white{background:linear-gradient(90deg,var(--accent),transparent);}
+.divider-center{margin:16px auto 28px;}
+
+.para-dark{color:var(--text-mid);line-height:1.85;font-size:17px;}
+.para-light{color:rgba(255,255,255,0.85);line-height:1.85;font-size:17px;}
+
+.container{max-width:var(--max-w);margin:0 auto;padding:0 clamp(16px,4vw,60px);}
+
+/* ─── BUTTONS ─────────────────────────────────────────── */
+.btn-primary{
+  display:inline-flex;align-items:center;gap:8px;
+  background:linear-gradient(135deg,var(--blue),var(--blue-dark));
+  color:var(--white);padding:13px 28px;border-radius:8px;
+  text-decoration:none;font-weight:700;font-size:12px;
+  letter-spacing:0.8px;text-transform:uppercase;
+  transition:all 0.25s;font-family:var(--mono);border:none;cursor:pointer;
+  box-shadow:0 4px 16px rgba(0,117,196,0.35);
+}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(0,117,196,0.5);}
+
+.btn-secondary{
+  display:inline-flex;align-items:center;gap:8px;
+  border:1.5px solid var(--blue);color:var(--blue-dark);
+  padding:12px 28px;border-radius:8px;text-decoration:none;
+  font-weight:700;font-size:12px;letter-spacing:0.8px;
+  text-transform:uppercase;transition:all 0.25s;
+  font-family:var(--mono);background:none;cursor:pointer;
+}
+.btn-secondary:hover{background:rgba(0,117,196,0.08);border-color:var(--blue-dim);}
+
+.btn-white{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--white);color:var(--blue-dark);
+  padding:12px 28px;border-radius:8px;
+  font-weight:700;font-size:12px;letter-spacing:0.8px;
+  text-transform:uppercase;transition:all 0.25s;
+  font-family:var(--mono);border:none;cursor:pointer;
+  box-shadow:0 4px 16px rgba(0,0,0,0.12);
+}
+.btn-white:hover{transform:translateY(-2px);background:var(--accent-light);box-shadow:0 8px 28px rgba(0,0,0,0.2);}
+
+/* ─── STATUS BADGES ─────────────────────────────── */
+.risk-badge{
+  display:inline-flex;align-items:center;gap:5px;
+  padding:3px 10px;border-radius:20px;
+  font-size:10px;font-weight:700;font-family:var(--mono);letter-spacing:0.5px;
+}
+.risk-blue{background:rgba(0,117,196,0.1);color:var(--blue-dim);border:1px solid rgba(0,117,196,0.28);}
+.risk-light{background:rgba(0,194,204,0.15);color:var(--blue-dark);border:1px solid rgba(0,117,196,0.25);}
+.risk-green{background:rgba(16,185,129,0.1);color:#059669;border:1px solid rgba(16,185,129,0.25);}
+.risk-dot{width:5px;height:5px;border-radius:50%;background:currentColor;flex-shrink:0;}
+
+/* ─── HERO ─────────────────────────────────────────────── */
+.hero{
+  background:linear-gradient(140deg,#E8F2FA 0%,#D0E8F5 40%,#B3D8ED 100%);
+  padding:clamp(60px,10vw,100px) 0 clamp(50px,8vw,80px);
+  position:relative;overflow:hidden;
+}
+.hero::before{
+  content:'';position:absolute;top:-80px;right:-80px;
+  width:500px;height:500px;border-radius:50%;
+  background:radial-gradient(circle,rgba(0,117,196,0.12) 0%,transparent 70%);
+}
+.hero-inner{
+  max-width:var(--max-w);margin:0 auto;
+  padding:0 clamp(16px,4vw,60px);
+  display:grid;grid-template-columns:1fr 1fr;gap:clamp(40px,6vw,80px);
+  align-items:center;
+}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(0,117,196,0.12);border:1px solid rgba(0,117,196,0.3);
+  border-radius:30px;padding:6px 16px;
+  font-family:var(--mono);font-size:10px;font-weight:700;
+  color:var(--blue-dim);letter-spacing:1.5px;text-transform:uppercase;
+  margin-bottom:22px;
+}
+.hero-badge-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.4;}}
+h1{
+  font-family:var(--display);font-size:clamp(34px,5vw,64px);
+  font-weight:800;line-height:1.06;letter-spacing:-1.5px;color:var(--text-dark);
+  margin-bottom:6px;
+}
+h1 .blue{color:var(--blue);}
+h1 .dark-blue{color:var(--blue-dark);}
+.hero-rule{width:48px;height:3px;background:linear-gradient(90deg,var(--blue),var(--accent));border-radius:2px;margin:20px 0;}
+.hero-body{font-size:17px;color:var(--text-mid);line-height:1.8;margin-bottom:28px;max-width:540px;}
+.hero-btns{display:flex;gap:14px;flex-wrap:wrap;}
+
+.hero-mini-stats{display:flex;gap:14px;margin-top:34px;flex-wrap:wrap;}
+.hero-mini-card{
+  background:rgba(255,255,255,0.85);
+  border:1px solid rgba(0,117,196,0.2);
+  border-radius:12px;padding:14px 18px;min-width:140px;
+  backdrop-filter:blur(8px);
+}
+.hero-mini-card strong{
+  display:block;font-family:var(--display);
+  font-size:22px;font-weight:800;color:var(--blue-dark);
+}
+.hero-mini-card span{font-size:11px;color:var(--text-muted);font-family:var(--mono);}
+
+/* DASHBOARD CARD */
+.score-card{
+  background:#fff;border-radius:18px;
+  border:1px solid rgba(0,117,196,0.2);
+  padding:24px;box-shadow:0 8px 40px rgba(0,51,102,0.12);
+}
+.score-card-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px;}
+.score-card-label{font-family:var(--mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);margin-bottom:4px;}
+.dashboard-title{font-family:var(--display);font-size:17px;font-weight:700;color:var(--text-dark);}
+.live-dot-wrap{display:flex;align-items:center;gap:5px;font-family:var(--mono);font-size:9px;font-weight:700;color:var(--accent);letter-spacing:1.5px;}
+.live-dot{width:8px;height:8px;border-radius:50%;background:var(--accent);animation:pulse 1.5s infinite;}
+.score-row{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid rgba(0,117,196,0.08);}
+.score-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:9px;font-weight:700;flex-shrink:0;}
+.score-icon.blue-bg{background:rgba(0,117,196,0.12);color:var(--blue-dim);}
+.score-icon.light-bg{background:rgba(0,194,204,0.15);color:var(--blue-dark);}
+.score-icon.green-bg{background:rgba(16,185,129,0.1);color:#059669;}
+.score-lbl{flex:1;font-size:12px;color:var(--text-muted);}
+.score-val{font-family:var(--mono);font-size:13px;font-weight:700;color:var(--text-dark);}
+.score-big{display:flex;align-items:center;gap:16px;margin-top:18px;padding:16px;background:linear-gradient(135deg,rgba(0,117,196,0.08),rgba(0,194,204,0.12));border-radius:12px;border:1px solid rgba(0,117,196,0.15);}
+.score-big-num{font-family:var(--display);font-size:48px;font-weight:800;color:var(--blue);line-height:1;}
+.score-big-info .label{font-size:13px;font-weight:700;color:var(--text-dark);}
+.score-big-info .sub{font-size:11px;color:var(--text-muted);margin-top:3px;font-family:var(--mono);}
+
+/* ─── STATS STRIP ─────────────────────────────────────── */
+.section-blue{
+  background:linear-gradient(135deg,var(--blue-dark) 0%,var(--blue-deeper) 100%);
+  padding:clamp(60px,8vw,96px) 0;
+}
+.stats-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:48px;
+}
+.stat-card{
+  background:rgba(0,194,204,0.08);border:1px solid rgba(0,194,204,0.2);
+  border-radius:16px;padding:clamp(20px,3vw,30px);
+  text-align:center;transition:transform 0.25s,border-color 0.25s;
+}
+.stat-card:hover{transform:translateY(-4px);border-color:rgba(0,194,204,0.4);}
+.stat-num{font-family:var(--display);font-size:clamp(32px,4vw,48px);font-weight:800;color:var(--accent);margin-bottom:10px;}
+.stat-lbl{font-size:13px;color:rgba(255,255,255,0.75);line-height:1.6;}
+
+/* ─── PLATFORM SECTION ─────────────────────────────────── */
+.platform-section{background:var(--bg-white);padding:clamp(60px,8vw,96px) 0;}
+.platform-sub{max-width:760px;margin-bottom:44px;color:var(--text-mid);}
+.platform-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;}
+.platform-card{
+  background:#fff;border:1px solid rgba(0,117,196,0.15);
+  border-radius:18px;overflow:hidden;
+  transition:border-color 0.3s,box-shadow 0.3s,transform 0.3s;
+  box-shadow:0 2px 12px rgba(0,51,102,0.06);
+}
+.platform-card:hover{border-color:rgba(0,117,196,0.35);box-shadow:0 12px 40px rgba(0,51,102,0.12);transform:translateY(-3px);}
+.platform-img-wrap{width:100%;height:180px;overflow:hidden;background:linear-gradient(135deg,var(--bg-light),var(--bg-section));}
+.platform-img-wrap img{width:100%;height:100%;object-fit:cover;}
+.platform-card .inner{padding:22px;}
+.element-badge{
+  display:inline-block;background:rgba(0,117,196,0.1);
+  color:var(--blue-dim);border-radius:6px;
+  padding:3px 10px;font-family:var(--mono);font-size:9px;
+  font-weight:700;letter-spacing:1.5px;text-transform:uppercase;
+  margin-bottom:12px;border:1px solid rgba(0,117,196,0.18);
+}
+.platform-card h3{font-family:var(--display);font-size:17px;font-weight:700;color:var(--text-dark);margin-bottom:10px;line-height:1.3;}
+.platform-card p{font-size:13px;color:var(--text-muted);line-height:1.75;}
+.more-text{display:none;font-size:13px;color:var(--text-muted);line-height:1.75;margin-top:10px;padding-top:10px;border-top:1px solid rgba(0,117,196,0.1);}
+.platform-card.open .more-text{display:block;}
+.expand-btn{
+  margin-top:16px;background:none;border:1px solid rgba(0,117,196,0.28);
+  color:var(--blue-dim);padding:7px 18px;border-radius:7px;
+  font-size:11px;font-weight:700;cursor:pointer;font-family:var(--mono);
+  letter-spacing:0.8px;text-transform:uppercase;transition:all 0.2s;
+}
+.expand-btn:hover{background:rgba(0,117,196,0.08);border-color:var(--blue);}
+
+/* ─── WHY SECTION ─────────────────────────────────────── */
+.why-section{background:var(--bg-light);padding:clamp(60px,8vw,96px) 0;}
+.why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:44px;}
+.why-card{
+  background:#fff;border:1px solid rgba(0,117,196,0.15);
+  border-radius:16px;padding:clamp(20px,3vw,30px);
+  transition:border-color 0.25s,box-shadow 0.25s;
+}
+.why-card:hover{border-color:rgba(0,117,196,0.35);box-shadow:0 8px 28px rgba(0,51,102,0.1);}
+.why-icon{
+  width:48px;height:48px;border-radius:12px;
+  background:linear-gradient(135deg,rgba(0,117,196,0.12),rgba(0,194,204,0.2));
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:16px;font-size:20px;color:var(--blue);
+  border:1px solid rgba(0,117,196,0.18);
+}
+.why-card h4{font-family:var(--display);font-size:16px;font-weight:700;color:var(--text-dark);margin-bottom:10px;}
+.why-card p{font-size:13px;color:var(--text-muted);line-height:1.75;}
+
+/* ─── SECTION LIGHT / ALT ─────────────────────────────── */
+.section-light{background:var(--bg-white);padding:clamp(60px,8vw,96px) 0;}
+.section-alt{background:var(--bg-light);padding:clamp(60px,8vw,96px) 0;}
+
+/* ─── MARKET CHARTS ─────────────────────────────────────── */
+.charts-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-top:44px;}
+.chart-card{
+  background:#fff;border:1px solid rgba(0,117,196,0.15);
+  border-radius:18px;padding:24px;
+  box-shadow:0 4px 16px rgba(0,51,102,0.06);
+}
+.chart-card h4{font-family:var(--display);font-size:15px;font-weight:700;color:var(--text-dark);margin-bottom:4px;}
+.chart-card p{font-size:12px;color:var(--text-muted);margin-bottom:20px;font-family:var(--mono);}
+.chart-wrap{height:260px;position:relative;}
+
+/* ─── ABOUT PAGE ─────────────────────────────────────────── */
+.about-hero{
+  background:linear-gradient(140deg,#D0E8F5 0%,#B3D8ED 60%,#80B8D8 100%);
+  padding:clamp(80px,12vw,120px) 0 clamp(60px,8vw,80px);
+  position:relative;overflow:hidden;
+}
+.about-hero::after{
+  content:'';position:absolute;bottom:-60px;left:-60px;
+  width:400px;height:400px;border-radius:50%;
+  background:radial-gradient(circle,rgba(0,117,196,0.15) 0%,transparent 70%);
+}
+.about-hero .container{position:relative;z-index:1;}
+.founders-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-top:44px;}
+.founder-card{
+  background:#fff;border:1px solid rgba(0,117,196,0.15);
+  border-radius:18px;padding:clamp(20px,3vw,36px);
+  box-shadow:0 4px 20px rgba(0,51,102,0.08);
+}
+.founder-img{width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--blue-dark));display:flex;align-items:center;justify-content:center;font-family:var(--display);font-size:24px;font-weight:800;color:#fff;margin-bottom:16px;}
+.founder-card h3{font-family:var(--display);font-size:20px;font-weight:700;color:var(--text-dark);margin-bottom:4px;}
+.founder-card .role{font-family:var(--mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--blue-dim);margin-bottom:14px;}
+.founder-card p{font-size:13px;color:var(--text-muted);line-height:1.8;}
+.founder-badges{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px;}
+.f-badge{background:rgba(0,117,196,0.08);border:1px solid rgba(0,117,196,0.18);border-radius:20px;padding:4px 12px;font-family:var(--mono);font-size:10px;color:var(--blue-dim);letter-spacing:0.5px;}
+
+/* ─── FAQ ─────────────────────────────────────────────── */
+.faq-wrap{display:flex;flex-direction:column;gap:12px;margin-top:32px;}
+.faq-item{background:#fff;border:1px solid rgba(0,117,196,0.15);border-radius:14px;overflow:hidden;}
+.faq-q{display:flex;align-items:center;justify-content:space-between;padding:18px 22px;cursor:pointer;gap:16px;}
+.faq-q h4{font-family:var(--display);font-size:15px;font-weight:600;color:var(--text-dark);}
+.faq-icon{font-size:20px;font-weight:300;color:var(--blue);flex-shrink:0;transition:transform 0.3s;}
+.faq-item.open .faq-icon{transform:rotate(45deg);}
+.faq-body{display:none;padding:0 22px 18px;font-size:14px;color:var(--text-muted);line-height:1.8;border-top:1px solid rgba(0,117,196,0.08);}
+.faq-item.open .faq-body{display:block;}
+
+/* ─── PRICING ─────────────────────────────────────────── */
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-top:44px;}
+.price-card{
+  background:#fff;border:1px solid rgba(0,117,196,0.15);
+  border-radius:18px;padding:clamp(22px,3vw,36px);
+  position:relative;transition:border-color 0.25s,box-shadow 0.25s,transform 0.25s;
+  box-shadow:0 4px 16px rgba(0,51,102,0.06);
+}
+.price-card:hover{transform:translateY(-4px);box-shadow:0 16px 48px rgba(0,51,102,0.14);}
+.price-card.featured{
+  border:2px solid var(--blue);
+  box-shadow:0 8px 40px rgba(0,117,196,0.18);
+  transform:scale(1.03);
+}
+.price-card.featured:hover{transform:scale(1.03) translateY(-4px);}
+.featured-label{
+  position:absolute;top:-14px;left:50%;transform:translateX(-50%);
+  background:linear-gradient(135deg,var(--blue),var(--blue-dark));
+  color:#fff;padding:4px 18px;border-radius:20px;
+  font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;
+  white-space:nowrap;
+}
+.price-tier{font-family:var(--mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--blue-dim);margin-bottom:8px;}
+.price-title{font-family:var(--display);font-size:20px;font-weight:700;color:var(--text-dark);margin-bottom:12px;}
+.price-amount{font-family:var(--display);font-size:clamp(34px,4vw,48px);font-weight:800;color:var(--blue-dark);line-height:1;}
+.price-amount span{font-size:16px;font-weight:500;color:var(--text-muted);}
+.price-desc{font-size:13px;color:var(--text-muted);margin:12px 0 20px;line-height:1.6;}
+.price-features{list-style:none;display:flex;flex-direction:column;gap:10px;margin-bottom:28px;}
+.price-features li{font-size:13px;color:var(--text-mid);display:flex;align-items:flex-start;gap:8px;}
+.price-features li::before{content:'✓';color:var(--blue);font-weight:700;flex-shrink:0;margin-top:1px;}
+
+/* ─── PROCESS ─────────────────────────────────────────── */
+.process-step{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:clamp(30px,5vw,72px);align-items:center;
+  margin-bottom:clamp(56px,8vw,96px);
+}
+.process-step:last-child{margin-bottom:0;}
+.step-num{font-family:var(--mono);font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--blue-dim);margin-bottom:12px;}
+.step-h3{font-family:var(--display);font-size:clamp(22px,2.5vw,32px);font-weight:800;color:var(--text-dark);margin-bottom:16px;line-height:1.2;}
+.step-p{color:var(--text-muted);font-size:15px;line-height:1.8;margin-bottom:18px;}
+.step-img{width:100%;aspect-ratio:16/10;border-radius:16px;border:1px solid rgba(0,117,196,0.15);overflow:hidden;box-shadow:0 8px 32px rgba(0,51,102,0.1);}
+.step-img img{width:100%;height:100%;object-fit:cover;}
+
+/* Image fallback placeholders */
+.img-placeholder{
+  width:100%;height:100%;
+  background:linear-gradient(135deg,var(--blue-dark),var(--blue));
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  color:rgba(255,255,255,0.7);font-family:var(--mono);font-size:11px;letter-spacing:1px;
+  text-transform:uppercase;gap:10px;
+}
+.img-placeholder i{font-size:32px;color:var(--accent);}
+
+/* ─── CONTACT ─────────────────────────────────────────── */
+.contact-wrap{display:grid;grid-template-columns:1fr 1fr;gap:48px;}
+.contact-form{background:#fff;border:1px solid rgba(0,117,196,0.15);border-radius:20px;padding:clamp(24px,4vw,44px);box-shadow:0 4px 20px rgba(0,51,102,0.06);}
+.contact-form h3{font-family:var(--display);font-size:22px;font-weight:700;color:var(--text-dark);margin-bottom:10px;}
+.contact-form p{font-size:14px;color:var(--text-muted);margin-bottom:28px;line-height:1.7;}
+.form-group{margin-bottom:18px;}
+.form-group label{display:block;font-size:12px;font-weight:700;color:var(--text-mid);margin-bottom:6px;font-family:var(--mono);letter-spacing:0.5px;text-transform:uppercase;}
+.form-group input,.form-group select,.form-group textarea{
+  width:100%;padding:12px 16px;border:1.5px solid rgba(0,117,196,0.18);
+  border-radius:10px;font-size:14px;font-family:var(--font);
+  color:var(--text-dark);background:#fff;
+  transition:border-color 0.2s,box-shadow 0.2s;outline:none;
+}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(0,117,196,0.1);}
+.form-group textarea{min-height:120px;resize:vertical;}
+.contact-info{display:flex;flex-direction:column;gap:0;}
+.contact-info h3{font-family:var(--display);font-size:22px;font-weight:700;color:var(--text-dark);margin-bottom:16px;}
+.contact-info p{font-size:15px;color:var(--text-muted);line-height:1.7;margin-bottom:28px;}
+.contact-detail{display:flex;align-items:flex-start;gap:16px;padding:16px 0;border-bottom:1px solid rgba(0,117,196,0.1);}
+.contact-detail .icon{width:44px;height:44px;background:rgba(0,117,196,0.1);border-radius:10px;display:flex;align-items:center;justify-content:center;color:var(--blue);flex-shrink:0;font-size:18px;}
+.contact-detail .text strong{display:block;font-size:13px;font-weight:700;color:var(--text-dark);margin-bottom:2px;}
+.contact-detail .text span{font-size:13px;color:var(--text-muted);}
+
+/* ─── FOOTER ─────────────────────────────────────────── */
+footer{background:var(--footer-bg);padding:clamp(48px,6vw,80px) 0 0;}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;margin-bottom:48px;}
+.footer-brand{font-family:var(--display);font-size:22px;font-weight:800;color:#fff;margin-bottom:14px;}
+.footer-desc{font-size:13px;color:rgba(255,255,255,0.65);line-height:1.8;margin-bottom:20px;}
+.footer-badges{display:flex;flex-wrap:wrap;gap:8px;}
+.footer-badge{background:rgba(0,194,204,0.12);border:1px solid rgba(0,194,204,0.25);border-radius:20px;padding:4px 12px;font-family:var(--mono);font-size:10px;color:rgba(255,255,255,0.8);letter-spacing:0.5px;}
+.footer-col-title{font-family:var(--mono);font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:16px;}
+.footer-col{display:flex;flex-direction:column;gap:10px;}
+.footer-col a{font-size:13px;color:rgba(255,255,255,0.65);cursor:pointer;transition:color 0.2s;}
+.footer-col a:hover{color:var(--accent);}
+.footer-bottom-bar{border-top:1px solid rgba(255,255,255,0.1);padding:20px 0;display:flex;align-items:center;justify-content:space-between;}
+.footer-bottom-bar p{font-size:12px;color:rgba(255,255,255,0.45);font-family:var(--mono);}
+.footer-bottom-bar p span{color:var(--accent);}
+.footer-bottom-links{display:flex;gap:20px;}
+.footer-bottom-links a{font-size:12px;color:rgba(255,255,255,0.5);cursor:pointer;font-family:var(--mono);transition:color 0.2s;}
+.footer-bottom-links a:hover{color:rgba(255,255,255,0.85);}
+
+/* ─── COMPARISON TABLE ───────────────────────── */
+.comp-table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin-top:40px;border-radius:16px;border:1px solid rgba(0,117,196,0.15);box-shadow:0 4px 16px rgba(0,51,102,0.06);}
+.comp-table{width:100%;border-collapse:collapse;background:#fff;}
+.comp-table th{background:linear-gradient(135deg,var(--blue-dark),var(--blue-deeper));color:#fff;font-family:var(--mono);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;padding:16px 18px;text-align:left;}
+.comp-table th:first-child{border-radius:16px 0 0 0;}
+.comp-table th:last-child{border-radius:0 16px 0 0;}
+.comp-table td{padding:14px 18px;font-size:13px;color:var(--text-mid);border-bottom:1px solid rgba(0,117,196,0.08);}
+.comp-table tr:last-child td{border-bottom:none;}
+.comp-table tr:hover td{background:rgba(0,117,196,0.03);}
+.comp-table td:first-child{font-weight:600;color:var(--text-dark);}
+.comp-table .yes{color:#059669;font-weight:700;}
+.comp-table .no{color:#94a3b8;font-weight:500;}
+.comp-table .highlight-col{background:rgba(0,117,196,0.06);}
+
+/* ─── RESPONSIVE ─────────────────────────────────────────── */
+@media(max-width:900px){
+  .nav-links{display:none;}
+  .hamburger{display:flex;}
+  .btn-demo-nav{display:none;}
+  .hero-inner{grid-template-columns:1fr;gap:40px;}
+  .hero-inner > div:last-child{display:none;}
+  .hero .hero-mini-stats{display:none;}
+  .stats-grid{grid-template-columns:1fr 1fr;}
+  .platform-grid{grid-template-columns:1fr;}
+  .why-grid{grid-template-columns:1fr 1fr;}
+  .pricing-grid{grid-template-columns:1fr;}
+  .price-card.featured{transform:scale(1);}
+  .process-step{grid-template-columns:1fr;gap:28px;}
+  .step-img{aspect-ratio:16/9;}
+  .contact-wrap{grid-template-columns:1fr;}
+  .charts-grid{grid-template-columns:1fr;}
+  .founders-grid{grid-template-columns:1fr;}
+  .footer-grid{grid-template-columns:1fr 1fr;}
+  .footer-bottom-bar{flex-direction:column;align-items:flex-start;gap:10px;}
+  .footer-bottom-links{flex-wrap:wrap;gap:12px;}
+  .section-light [style*="grid-template-columns:1fr 1fr"],
+  .section-alt [style*="grid-template-columns:1fr 1fr"]{grid-template-columns:1fr !important;}
+  [style*="grid-template-columns:repeat(3,1fr)"]{grid-template-columns:1fr !important;}
+  .platform-grid[style*="grid-template-columns:repeat(2,1fr)"]{grid-template-columns:1fr !important;}
+}
+@media(max-width:600px){
+  .stats-grid{grid-template-columns:1fr;}
+  .footer-grid{grid-template-columns:1fr;}
+  .why-grid{grid-template-columns:1fr;}
+  .hero-mini-stats{flex-direction:column;}
+  .hero-mini-card{min-width:unset;width:100%;}
+  .btn-primary,.btn-secondary,.btn-white{width:100%;justify-content:center;}
+  .footer-bottom-links{flex-direction:column;gap:8px;}
+}
+</style>
+</head>
+<body>
+<!-- NAVBAR -->
+<nav class="navbar">
+  <a class="nav-logo" onclick="showPage('home')">
+    <div class="nav-logo-text">
+      SentinelIQ AI
+      <span>Predictive Safety Governance</span>
+    </div>
+  </a>
+
+  <ul class="nav-links">
+    <li><button id="nav-home" class="active" onclick="showPage('home')">Home</button></li>
+    <li><button id="nav-about" onclick="showPage('about')">About</button></li>
+    <li><button id="nav-platform" onclick="showPage('platform')">Platform</button></li>
+    <li><button id="nav-market" onclick="showPage('market')">Market</button></li>
+    <li><button id="nav-process" onclick="showPage('process')">Process</button></li>
+    <li><button id="nav-faq" onclick="showPage('faq')">FAQ</button></li>
+    <li><button id="nav-pricing" onclick="showPage('pricing')">Pricing</button></li>
+    <li><button id="nav-contact" onclick="showPage('contact')">Contact</button></li>
+  </ul>
+
+  <div class="nav-right">
+    <button class="btn-demo-nav" onclick="showPage('contact')">Request Demo</button>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile Nav -->
+<div class="mobile-nav" id="mobileNav">
+  <button onclick="showPage('home');closeMobile()">Home</button>
+  <button onclick="showPage('about');closeMobile()">About</button>
+  <button onclick="showPage('platform');closeMobile()">Platform</button>
+  <button onclick="showPage('market');closeMobile()">Market</button>
+  <button onclick="showPage('process');closeMobile()">Process</button>
+  <button onclick="showPage('faq');closeMobile()">FAQ</button>
+  <button onclick="showPage('pricing');closeMobile()">Pricing</button>
+  <button onclick="showPage('contact');closeMobile()">Contact</button>
+  <button class="mob-cta" onclick="showPage('contact');closeMobile()">Request Demo →</button>
+</div>
+</div>
+
+
+<!-- ═══════ PAGE: HOME ═══════ -->
+<div class="page active" id="page-home">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-inner">
+      <div>
+        <div class="hero-badge">
+          <span class="hero-badge-dot"></span>
+          UK's First Predictive Shift-Safety Governance Platform
+        </div>
+        <h1>
+          See Threats.<br>
+          <span class="blue">Stop Risks.</span>
+          <span class="dark-blue"> Secure Tomorrow.</span>
+        </h1>
+        <div class="hero-rule"></div>
+        <p class="hero-body">
+          SentinelIQ AI is an AI-powered cybersecurity and safety platform built for UK petrol forecourts. It detects threats, predicts risks, and automates response in real time  protecting lone workers, reducing fuel theft exposure, and ensuring HSE compliance across late-night retail operations.
+        </p>
+        <div class="hero-btns">
+          <button class="btn-primary" onclick="showPage('contact')">Book a Platform Demo</button>
+          <button class="btn-secondary" onclick="showPage('platform')">Explore Platform</button>
+        </div>
+        
+      
+      </div>
+      <!-- DASHBOARD CARD -->
+      <div>
+        <div class="score-card">
+          <div class="score-card-top">
+            <div>
+              <div class="score-card-label">SentinelIQ AI · Live Engine</div>
+              <h3 class="dashboard-title">Shift Safety Intelligence Dashboard</h3>
+            </div>
+            <div class="live-dot-wrap"><span class="live-dot"></span>LIVE</div>
+          </div>
+          <div class="score-row">
+            <div class="score-icon blue-bg">RF</div>
+            <span class="score-lbl">Risk Fingerprint Score</span>
+            <span class="score-val">HIGH · Lone Worker ⚠</span>
+          </div>
+          <div class="score-row">
+            <div class="score-icon light-bg">CI</div>
+            <span class="score-lbl">Check-In Compliance</span>
+            <span class="score-val">99.4% ↑ ✓</span>
+          </div>
+          <div class="score-row">
+            <div class="score-icon green-bg">ES</div>
+            <span class="score-lbl">Emergency Escalation Time</span>
+            <span class="score-val">2.2 min ↓92%</span>
+          </div>
+          <div class="score-row">
+            <div class="score-icon blue-bg">HC</div>
+            <span class="score-lbl">HSE Compliance Log</span>
+            <span class="score-val">100% Auditable</span>
+          </div>
+          <div class="score-big">
+            <div class="score-big-num">62<span style="font-size:24px;">%</span></div>
+            <div class="score-big-info">
+              <div class="label">UK Fuel Theft Surge Since 2025</div>
+              <div class="sub">SentinelIQ AI · Predictive Defence · Active</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS STRIP -->
+  <section class="section-blue">
+    <div class="container">
+      <div class="label-tag-white">The UK Forecourt Safety Crisis</div>
+      <h2 class="section-h2 white">UK Petrol Forecourts Are Losing Millions to<br>Lone-Worker Safety Blind Spots.</h2>
+      <div class="section-divider divider-white"></div>
+      <p class="para-light" style="max-width:760px;">
+        UK independent petrol forecourts face an escalating "Operational Safety Gap": a 62% surge in fuel theft, 950,000+ annual verbal abuse incidents, and lone workers operating overnight without real-time safety netting. SentinelIQ AI is the predictive shift-risk infrastructure that turns fragmented shift data into a coordinated safety layer  protecting staff, reducing insurance premiums, and ensuring HSE compliance.
+      </p>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-num">62%</div>
+          <div class="stat-lbl">Surge in UK fuel thefts and drive-offs since 2025  directly exposing lone-night workers to extreme operational risk</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">950K+</div>
+          <div class="stat-lbl">Incidents of verbal abuse and 67,000 physical confrontations against UK retail staff annually (ACS Crime Report 2026)</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">88.5%</div>
+          <div class="stat-lbl">Of UK forecourts operate late-night lone-worker shifts (10pm–6am) without proactive safety screening</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">£4,500</div>
+          <div class="stat-lbl">Average cost of replacing a lone-worker driven by safety anxiety  the silent staff retention penalty</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PLATFORM PREVIEW -->
+  <section class="platform-section">
+    <div class="container">
+      <div class="label-tag">Core Intelligence Modules</div>
+      <h2 class="section-h2 dark">Six Capabilities. One Complete Safety Governance Platform.</h2>
+      <div class="section-divider divider-blue"></div>
+      <p class="para-dark platform-sub">
+        SentinelIQ AI combines Threat Intelligence, Real-Time Detection, Automated Response, Behaviour Analytics, Risk &amp; Compliance, and Cloud-Native Security into one unified B2B SaaS platform  no complex hardware, no black-box algorithms, real-time predictive safety.
+      </p>
+      <div class="platform-grid">
+
+        <div class="platform-card">
+          <div class="platform-img-wrap">
+            <div class="img-placeholder"><img src="sent1.jpg"
+               alt="Inventory Management">Threat Intelligence</div>
+          </div>
+          <div class="inner">
+            <div class="element-badge">Module 01</div>
+            <h3>AI-Powered Threat Intelligence</h3>
+            <p>Leverage global threat feeds and AI models to identify advanced threats early  before they impact your forecourt operations.</p>
+            <div class="more-text">
+              SentinelIQ AI's Threat Intelligence engine uses proprietary UK petrol forecourt risk heuristics, regional crime indices, and ACS Crime Report 2026 data to fingerprint every scheduled shift. The system calculates a Shift-Risk DNA score  factoring lone-worker status, historical site incidents, peak drive-off windows, and local police response latencies  delivering a plain-language risk alert before a shift even begins.
+            </div>
+            <button class="expand-btn" onclick="toggleCard(this)">Learn More</button>
+          </div>
+        </div>
+
+        <div class="platform-card">
+          <div class="platform-img-wrap">
+            <div class="img-placeholder"><img src="sent2.jpg" alt="Real-Time Detection">Real-Time Detection</div>
+          </div>
+          <div class="inner">
+            <div class="element-badge">Module 02</div>
+            <h3>Real-Time Threat Detection</h3>
+            <p>Detect and prioritise threats in real time across endpoints, networks, and cloud environments  with automatic escalation on missed check-ins.</p>
+            <div class="more-text">
+              The Active Safety Escalation Engine monitors live check-in intervals throughout every lone-worker evening shift. When a worker misses a scheduled check-in, the system immediately triggers a structured, tiered escalation protocol  alerting supervisors, launching backup workflows, and preparing incident dossiers  shrinking escalation latency from 45 minutes to under 2.2 minutes.
+            </div>
+            <button class="expand-btn" onclick="toggleCard(this)">Learn More</button>
+          </div>
+        </div>
+
+        <div class="platform-card">
+          <div class="platform-img-wrap">
+            <div class="img-placeholder"><img src="sent3.jpg" alt="Automated Response">Automated Response</div>
+          </div>
+          <div class="inner">
+            <div class="element-badge">Module 03</div>
+            <h3>Automated Response &amp; Escalation</h3>
+            <p>Automate response actions to contain threats and reduce response time  turning reactive emergency management into proactive safety governance.</p>
+            <div class="more-text">
+              The Automated Response module eliminates manual supervisor calling bottlenecks. Upon detecting a missed check-in or safety anomaly, it fires tiered notifications, engages emergency backup workflows, and compiles a forensic incident dossier in seconds. Managers retain full override capability with mandatory reason capture  preserving human-in-the-loop control while building a legally auditable compliance trail.
+            </div>
+            <button class="expand-btn" onclick="toggleCard(this)">Learn More</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY SECTION -->
+  <section class="why-section">
+    <div class="container">
+      <div class="label-tag">Why SentinelIQ AI</div>
+      <h2 class="section-h2 dark">Built for the Predictive Era.<br>Not Just a Panic Button with an AI Badge.</h2>
+      <div class="section-divider divider-blue"></div>
+      <div class="why-grid">
+        <div class="why-card">
+          <div class="why-icon"><i class="fas fa-shield-alt"></i></div>
+          <h4>Predictive Shift-Risk Fingerprinting</h4>
+          <p>Moves beyond reactive panic buttons to a live safety decision layer that screens every shift before it begins  computing a transparent Risk Score + Confidence Level rather than relying on gut feel.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon"><i class="fas fa-dna"></i></div>
+          <h4>Shift-Risk DNA Intelligence</h4>
+          <p>Captures proprietary "Shift-Risk DNA"  linking lone-worker schedules, crime indices, and site incident history  into an operational safety asset competitors cannot replicate without years of UK-specific data.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon"><i class="fas fa-pound-sign"></i></div>
+          <h4>Margin & Insurance Protection</h4>
+          <p>Creates legally auditable HSE compliance logs via Manager Override Reason Capture  enabling operators to negotiate lower liability insurance premiums and avoid regulatory penalties under INDG73 and INDG424.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon"><i class="fas fa-plug"></i></div>
+          <h4>Frictionless CSV Deployment</h4>
+          <p>Designed to work immediately without API dependencies. Simple CSV/manual rota inputs enable instant deployment across 3–5 pilot forecourts without waiting on corporate IT approvals or hardware installations.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon"><i class="fas fa-leaf"></i></div>
+          <h4>ESG & Social Impact</h4>
+          <p>Eliminates unnecessary physical "wellness visit" callouts (reducing transport emissions), digitises paper-based safety logs, and protects vulnerable lone workers from the mental health toll of retail crime hostility.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon"><i class="fas fa-robot"></i></div>
+          <h4>SME-Optimised Safety SaaS</h4>
+          <p>Tiered SaaS from £100/month  giving independent UK petrol forecourts enterprise-grade predictive safety intelligence without the cost of full Security Operations Centres or dedicated monitoring teams.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div><!-- end page home -->
+
+
+<!-- ═══════ PAGE: ABOUT ═══════ -->
+<div class="page" id="page-about">
+  <section class="about-hero">
+    <div class="container">
+      <div class="label-tag">About Us</div>
+      <h2 class="section-h2 dark">Built by Security Operators Who Lived the Problem.<br><span style="color:var(--blue-dark);">Designed for the Predictive Safety Era.</span></h2>
+      <div class="section-divider divider-blue"></div>
+      <p class="para-dark" style="max-width:680px;margin-bottom:40px;">SentinelIQ AI is a UK-based B2B SaaS venture co-founded by Vamsi Krishna Kotha and Sriveni Gaddam  combining deep UK private security operations expertise with frontline retail management experience to solve the most pressing challenge facing UK petrol forecourts: the "Operational Safety Gap" that leaves lone-night workers dangerously exposed and costs operators millions in avoidable liabilities.</p>
+      <div class="hero-btns">
+        <button class="btn-primary" onclick="showPage('contact')">Get in Touch</button>
+        <button class="btn-secondary" onclick="showPage('platform')">Explore Platform</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Vision & Mission -->
+  <section class="section-light">
+    <div class="container">
+      <div class="label-tag">Vision & Mission</div>
+      <h2 class="section-h2 dark">To Be the Global Standard for<br>Predictive Shift-Safety Governance.</h2>
+      <div class="section-divider divider-blue"></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-top:32px;">
+        <div class="why-card">
+          <div class="why-icon"><i class="fas fa-eye"></i></div>
+          <h4>Our Vision</h4>
+          <p>We aspire to be the global standard for "predictive shift-safety governance"  fostering a future in which every late-night and 24/7 physical retail operation runs with total lone-worker reliability, proactive hazard mitigation, and the sustainable, data-driven resilience required to protect frontline workforces and secure operating margins worldwide.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon"><i class="fas fa-bullseye"></i></div>
+          <h4>Our Mission</h4>
+          <p>To empower independent and multi-site UK petrol forecourt and convenience operators to achieve operational safety and margin resilience  by leveraging rules-based, predictive shift-risk intelligence to eliminate lone-worker safety blind spots, protect operating margins, and ensure robust regulatory compliance across late-night retail environments.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Core Values -->
+  <section class="section-alt">
+    <div class="container">
+      <div class="label-tag">Core Values</div>
+      <h2 class="section-h2 dark">What Drives Everything We Build</h2>
+      <div class="section-divider divider-blue"></div>
+      <div class="why-grid">
+        <div class="why-card">
+          <div class="why-icon"><i class="fas fa-crosshairs"></i></div>
+          <h4>Operational Integrity</h4>
+          <p>Accurate shift-risk profiling and elimination of safety blind spots via dependable, rule-based, real-time predictive insights and transparent data confidence levels.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon"><i class="fas fa-shield-alt"></i></div>
+          <h4>Resilience</h4>
+          <p>Helping independent petrol forecourt operators protect operating margins and safeguard lone frontline workers from the volatility of retail crime, fuel theft, and late-night operational disruption.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon"><i class="fas fa-bolt"></i></div>
+          <h4>Simplicity</h4>
+          <p>Powerful safety-governance intelligence delivered with low-friction, intuitive interfaces  lightning-fast frontline check-ins and simple CSV scheduling uploads woven into the busy daily retail workflow.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon"><i class="fas fa-lock"></i></div>
+          <h4>Accountability</h4>
+          <p>Transparent, legally auditable override and check-in logs enforced through our Manager Override Feature with Mandatory Reason Capture  ensuring compliance with UK HSE guidelines.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon"><i class="fas fa-hands-helping"></i></div>
+          <h4>Empowerment</h4>
+          <p>Equipping retail convenience entrepreneurs and isolated night-shift workers with the predictive intelligence needed to secure physical operations, reduce staff-retention anxiety, and scale without adding complexity.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon"><i class="fas fa-globe"></i></div>
+          <h4>ESG Impact</h4>
+          <p>Reducing the carbon footprint of physical security checks, eliminating paper-based compliance waste, and protecting the mental health of lone workers facing escalating retail crime.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Founders -->
+  <section class="section-light">
+    <div class="container">
+      <div class="label-tag">Co-Founders</div>
+      <h2 class="section-h2 dark">The People Behind<br>SentinelIQ AI</h2>
+      <div class="section-divider divider-blue"></div>
+      <div class="founders-grid">
+        <div class="founder-card">
+          <div class="founder-img">VK</div>
+          <h3>Vamsi Krishna Kotha</h3>
+          <div class="role">Founder & CTO · Technical Lead</div>
+          <p>Vamsi's professional trajectory  defined by his MSc in Cyber Security from the University of Hertfordshire and his experience as Director at Limestone Ltd and Operations Manager at Security Hub Ltd  provides first-hand expertise in risk management, incident response, team scheduling, and securing physical operations within the UK private security industry. His background in information security systems design, dynamic threat modelling, and secure multi-tenant database structures forms the technical backbone of SentinelIQ AI's shift-risk fingerprinting engine and automated escalation pathways.</p>
+          <div class="founder-badges">
+            <span class="f-badge">MSc Cyber Security · Hertfordshire</span>
+            <span class="f-badge">Director · Limestone Ltd</span>
+            <span class="f-badge">Ops Manager · Security Hub Ltd</span>
+            <span class="f-badge">UK Private Security Expert</span>
+            <span class="f-badge">Threat Modelling & Risk Systems</span>
+          </div>
+        </div>
+        <div class="founder-card">
+          <div class="founder-img">SG</div>
+          <h3>Sriveni Gaddam</h3>
+          <div class="role">Co-Founder & COO · Operational Lead</div>
+          <p>Sriveni holds an MSc in Management with Extended Professional Practice from Coventry University, London, and possesses extensive ground-level retail experience as a team leader and sales assistant at WHSmith (including high-pressure operations at Churchill Hospital, Oxford, and Richmond, London). Her hands-on experience in retail shift scheduling, stock compliance, and frontline lone-worker anxieties ensures SentinelIQ AI's user interface is designed for real-world usability  simple, fast check-ins with immediate, reassuring on-screen confirmations rather than distracting gamification.</p>
+          <div class="founder-badges">
+            <span class="f-badge">MSc Management · Coventry University</span>
+            <span class="f-badge">Team Leader · WHSmith</span>
+            <span class="f-badge">Richmond &amp; Oxford Operations</span>
+            <span class="f-badge">Retail Shift &amp; Safety Governance</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div><!-- end page about -->
+
+
+<!-- ═══════ PAGE: PLATFORM ═══════ -->
+<div class="page" id="page-platform">
+  <section style="background:linear-gradient(140deg,#E8F2FA 0%,#D0E8F5 60%,#B3D8ED 100%);padding:clamp(80px,12vw,120px) 0 clamp(60px,8vw,80px);">
+    <div class="container">
+      <div class="label-tag">Full Platform</div>
+      <h2 class="section-h2 dark">Six Core Capabilities.<br><span style="color:var(--blue-dark);">One Predictive Safety Command Centre.</span></h2>
+      <div class="section-divider divider-blue"></div>
+      <p class="para-dark" style="max-width:680px;margin-bottom:40px;">Every feature is built specifically for the high-risk UK petrol forecourt environment  not retrofitted from generic security tools. Our proprietary Shift-Risk Fingerprinting engine and active safety escalation workflows translate complex shift-level vulnerabilities into actionable, compliance-ready KPIs that operators actually need.</p>
+      <div class="hero-btns">
+        <button class="btn-primary" onclick="showPage('contact')">Request Demo →</button>
+        <button class="btn-secondary" onclick="showPage('pricing')">View Pricing</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-light">
+    <div class="container">
+      <div class="platform-grid" style="grid-template-columns:repeat(2,1fr);gap:28px;">
+
+        <div class="platform-card">
+          <div class="platform-img-wrap" style="height:220px;">
+            <div class="img-placeholder"><div class="img-placeholder"><img src="sent4.jpg" alt="Real-Time Detection">Real-Time Detection</div>Threat Intelligence Engine</div>
+          </div>
+          <div class="inner">
+            <div class="element-badge">Capability 01 · Threat Intelligence</div>
+            <h3>AI-Powered Threat Intelligence</h3>
+            <p>Leverage global threat feeds and UK-specific crime indices to identify advanced shift-level threats early  before they escalate into physical confrontations or missed check-ins.</p>
+            <div class="more-text">The Shift-Risk Fingerprinting module ingests UK petrol forecourt risk heuristics  including ACS 2026 crime data, regional police response times, fuel-theft peak windows, and site-level incident logs  to generate an objective Risk Score with a transparent Confidence Level for every scheduled shift. Plain-language alerts explain exactly why a shift is flagged as high-risk, preventing black-box decision-making.</div>
+            <button class="expand-btn" onclick="toggleCard(this)">Learn More</button>
+          </div>
+        </div>
+
+        <div class="platform-card">
+          <div class="platform-img-wrap" style="height:220px;">
+            <div class="img-placeholder"><img src="sent5.jpg" alt="Real-Time Detection">Real-Time Detection</div>
+          </div>
+          <div class="inner">
+            <div class="element-badge">Capability 02 · Real-Time Detection</div>
+            <h3>Real-Time Detection &amp; Check-In Monitoring</h3>
+            <p>Detect and prioritise threats in real time  automatically monitoring lone-worker check-in intervals and triggering escalation within 2.2 minutes of a missed check-in.</p>
+            <div class="more-text">The Active Safety Escalation Engine continuously monitors every scheduled late-night shift check-in. When a worker misses an interval, the system immediately deconstructs the threat and fires structured, tiered supervisor alerts  eliminating the 45-minute manual calling window that currently exposes lone workers to undetected safety blackouts.</div>
+            <button class="expand-btn" onclick="toggleCard(this)">Learn More</button>
+          </div>
+        </div>
+
+        <div class="platform-card">
+          <div class="platform-img-wrap" style="height:220px;">
+            <div class="img-placeholder"><img src="sent6.jpg" alt="Automated Response">Automated Response</div>
+          </div>
+          <div class="inner">
+            <div class="element-badge">Capability 03 · Automated Response</div>
+            <h3>Automated Response &amp; Escalation Engine</h3>
+            <p>Automate response actions to contain threats and reduce response time  transforming reactive emergency management into proactive, pre-shift safety governance.</p>
+            <div class="more-text">The Automated Response module fires tiered escalation protocols (supervisor alerts → backup workflows → compliance dossiers) the moment a check-in anomaly is detected. Managers retain full override sovereignty with mandatory reason capture  building a legally auditable compliance trail while preserving operational agility during unavoidable staffing constraints.</div>
+            <button class="expand-btn" onclick="toggleCard(this)">Learn More</button>
+          </div>
+        </div>
+
+        <div class="platform-card">
+          <div class="platform-img-wrap" style="height:220px;">
+            <div class="img-placeholder"><img src="sent7.jpg" alt="Risk & Compliance Analytics">Risk & Compliance Analytics</div>
+          </div>
+          <div class="inner">
+            <div class="element-badge">Capability 04 · Risk & Compliance</div>
+            <h3>Risk &amp; Compliance Analytics</h3>
+            <p>Continuous risk assessment and compliance monitoring with audit-ready reports  ensuring full alignment with UK HSE lone-working guidelines INDG73 and INDG424.</p>
+            <div class="more-text">Every shift override, check-in event, and safety intervention is logged with structured, qualitative context  creating an unalterable audit trail for HSE inspectors and insurance underwriters. Operators can directly leverage this data to demonstrate active compliance and negotiate lower commercial liability insurance premiums, delivering a direct financial return on the platform investment.</div>
+            <button class="expand-btn" onclick="toggleCard(this)">Learn More</button>
+          </div>
+        </div>
+
+        <div class="platform-card">
+          <div class="platform-img-wrap" style="height:220px;">
+            <div class="img-placeholder"><img src="sent8.jpg" alt="Behaviour Analytics">Behaviour Analytics</div>
+          </div>
+          <div class="inner">
+            <div class="element-badge">Capability 05 · Behaviour Analytics</div>
+            <h3>Behaviour Analytics &amp; Anomaly Detection</h3>
+            <p>Analyse shift patterns and site behaviour to detect anomalies and insider risks  surfacing hidden operational vulnerabilities before they become safety incidents.</p>
+            <div class="more-text">The Outcome-Learning Safety Memory (OLSM) captures structured data from every shift intervention, manager override, and check-in event  continuously refining default safety templates, escalation thresholds, and risk baselines based on real-world pilot feedback. The anonymised Forecourt Incident Intelligence Network (FIN) allows shifts from London forecourts to inform risk baselines for operators in Manchester or Oxford.</div>
+            <button class="expand-btn" onclick="toggleCard(this)">Learn More</button>
+          </div>
+        </div>
+
+        <div class="platform-card">
+          <div class="platform-img-wrap" style="height:220px;">
+            <div class="img-placeholder"><img src="sent9.jpg" alt="Cloud-Native Security">Cloud-Native Security</div>
+          </div>
+          <div class="inner">
+            <div class="element-badge">Capability 06 · Cloud-Native Security</div>
+            <h3>Cloud-Native Security &amp; Integrations</h3>
+            <p>Protect your data, applications, identities, and infrastructure seamlessly  with secure multi-tenant architecture, full UK GDPR compliance, and plug-and-play API integrations.</p>
+            <div class="more-text">SentinelIQ AI operates on a privacy-by-design framework fully compliant with the Information Commissioner's Office (ICO) standards. Year 2 API connectors integrate natively with dominant UK rota scheduling platforms (Deputy, Planday, Rotacloud) and retail POS systems  automating shift roster ingestion, eliminating manual CSV steps, and creating high technical switching costs that defend the platform moat.</div>
+            <button class="expand-btn" onclick="toggleCard(this)">Learn More</button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Competitor Comparison -->
+      <div style="margin-top:60px;">
+        <div class="label-tag">Competitor Analysis</div>
+        <h2 class="section-h2 dark" style="margin-bottom:8px;">How SentinelIQ AI Compares</h2>
+        <div class="section-divider divider-blue"></div>
+        <p class="para-dark" style="max-width:700px;margin-bottom:0;">SentinelIQ AI is the only platform combining predictive pre-shift risk screening, real-time escalation automation, UK-specific lone-worker intelligence, and legally auditable HSE compliance in a single SME-optimised SaaS.</p>
+        <div class="comp-table-wrap">
+          <table class="comp-table">
+            <thead>
+              <tr>
+                <th>Feature / Capability</th>
+                <th>Rota Platforms (Deputy/Planday)</th>
+                <th>Legacy CCTV / ARCs (Verisure)</th>
+                <th>Lone-Worker Apps (Peoplesafe)</th>
+                <th>Manual Ops</th>
+                <th style="background:var(--blue);">SentinelIQ AI</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>Pre-Shift Risk Screening</td><td class="no">No</td><td class="no">No</td><td class="no">No</td><td class="no">No</td><td class="yes highlight-col">✓ Shift-Risk Fingerprinting</td></tr>
+              <tr><td>Automated Check-In Escalation</td><td class="no">Passive scheduling</td><td class="no">Post-incident only</td><td class="no">Manual trigger</td><td class="no">Phone calls</td><td class="yes highlight-col">✓ Auto &lt;3 min escalation</td></tr>
+              <tr><td>Risk Score + Confidence Level</td><td class="no">No</td><td class="no">No</td><td class="no">No</td><td class="no">Gut feeling</td><td class="yes highlight-col">✓ Transparent + Plain-Language</td></tr>
+              <tr><td>Manager Override + Reason Capture</td><td class="no">No</td><td class="no">No</td><td class="no">No</td><td class="no">No audit trail</td><td class="yes highlight-col">✓ Mandatory + Legally Auditable</td></tr>
+              <tr><td>HSE INDG73/INDG424 Compliance</td><td class="no">Partial</td><td class="no">No</td><td class="no">Limited</td><td class="no">No</td><td class="yes highlight-col">✓ Full audit-ready logs</td></tr>
+              <tr><td>UK Forecourt Crime Intelligence</td><td class="no">No</td><td class="no">No</td><td class="no">No</td><td class="no">No</td><td class="yes highlight-col">✓ ACS 2026 data integrated</td></tr>
+              <tr><td>Offline / Low-Data Fallback</td><td class="no">No</td><td class="no">No</td><td class="no">Crashes</td><td class="no">Paper-based</td><td class="yes highlight-col">✓ Baseline templates + manual</td></tr>
+              <tr><td>Cost Structure</td><td class="no">Per-user SaaS</td><td class="no">High CapEx hardware</td><td class="no">Device-dependent</td><td class="no">Time-intensive</td><td class="yes highlight-col">✓ SME-optimised SaaS</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+</div><!-- end page platform -->
+
+
+<!-- ═══════ PAGE: MARKET ═══════ -->
+<div class="page" id="page-market">
+  <section style="background:linear-gradient(140deg,#E8F2FA 0%,#D0E8F5 50%,#B3D8ED 100%);padding:clamp(80px,12vw,120px) 0 clamp(60px,8vw,80px);">
+    <div class="container">
+      <div class="label-tag">Market Analysis</div>
+      <h2 class="section-h2 dark">A £48.5 Billion Sector Under Siege.<br><span style="color:var(--blue-dark);">SentinelIQ AI Is the Solution.</span></h2>
+      <div class="section-divider divider-blue"></div>
+      <p class="para-dark" style="max-width:680px;margin-bottom:40px;">The UK convenience retail market reached £48.5 billion in 2025, with approximately 8,365 active petrol forecourts  65% of which are independent SMEs operating on razor-thin 2–4% fuel margins. SentinelIQ AI targets this high-risk, underserved segment with affordable, immediately deployable predictive safety governance.</p>
+      <div class="hero-btns">
+        <button class="btn-primary" onclick="showPage('contact')">Request Demo →</button>
+        <button class="btn-secondary" onclick="showPage('pricing')">View Pricing</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-light">
+    <div class="container">
+      <div class="label-tag">Market Data & Intelligence</div>
+      <h2 class="section-h2 dark">The Numbers Behind the Opportunity</h2>
+      <div class="section-divider divider-blue"></div>
+      <div class="charts-grid">
+        <div class="chart-card">
+          <h4>UK Forecourt Safety Market by Segment (SAM)</h4>
+          <p>Target addressable market across UK forecourt and convenience operator types</p>
+          <div class="chart-wrap"><canvas id="chartSector"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <h4>Key Operational Pain Points  UK Forecourt Operators</h4>
+          <p>Primary safety challenges driving adoption of SentinelIQ AI (ACS 2026 data)</p>
+          <div class="chart-wrap"><canvas id="chartRootCause"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <h4>SentinelIQ AI vs Competitors  Capability Radar</h4>
+          <p>Platform capabilities vs existing market alternatives across key safety dimensions</p>
+          <div class="chart-wrap"><canvas id="chartRadar"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <h4>Global Lone-Worker Safety Tech Market Growth 2024–2030</h4>
+          <p>Global market growth (USD B) + UK SafetyTech adoption trajectory (%)</p>
+          <div class="chart-wrap"><canvas id="chartGrowth"></canvas></div>
+        </div>
+      </div>
+      <div class="charts-grid" style="grid-template-columns:1fr;margin-top:32px;">
+        <div class="chart-card">
+          <h4>Platform Feature Comparison  SentinelIQ AI vs Market Average</h4>
+          <p>Capability scores across key operational safety intelligence dimensions (out of 100)</p>
+          <div class="chart-wrap"><canvas id="chartPerf"></canvas></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Revenue Projections -->
+  <section class="section-blue">
+    <div class="container">
+      <div class="label-tag-white">Financial Projections</div>
+      <h2 class="section-h2 white">3-Year Revenue Trajectory</h2>
+      <div class="section-divider divider-white"></div>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-num">£84K</div>
+          <div class="stat-lbl">Year 1 Revenue · 3–5 pilot forecourts · London & Essex · £50K founder equity · £1,809 net profit</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">£382K</div>
+          <div class="stat-lbl">Year 2 Revenue · 50–100 multi-site operators · Full UK launch · £81,754 net profit · API integrations</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">£776K</div>
+          <div class="stat-lbl">Year 3 Revenue · 300+ active forecourts · £190,635 net profit · Germany & UAE pilots · FIN scaling</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">25+</div>
+          <div class="stat-lbl">High-value UK-based safety tech and AI operations roles created by Year 5 at platform maturity</div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div><!-- end page market -->
+
+
+<!-- ═══════ PAGE: PROCESS ═══════ -->
+<div class="page" id="page-process">
+  <section style="background:linear-gradient(140deg,#E8F2FA 0%,#D0E8F5 50%,#B3D8ED 100%);padding:clamp(80px,12vw,120px) 0 clamp(60px,8vw,80px);">
+    <div class="container">
+      <div class="label-tag">How It Works</div>
+      <h2 class="section-h2 dark">From Reactive Panic Buttons<br>to <span style="color:var(--blue-dark);">Predictive Shift-Safety Governance</span></h2>
+      <div class="section-divider divider-blue"></div>
+      <p class="para-dark" style="max-width:680px;margin-bottom:40px;">SentinelIQ AI operates as a closed-loop safety lifecycle  screening, monitoring, escalating, overriding, reporting, and continuously evolving your forecourt's safety logic, so every shift decision is grounded in real predictive intelligence, not reactive firefighting.</p>
+      <div class="hero-btns">
+        <button class="btn-primary" onclick="showPage('contact')">Request a Demo →</button>
+        <button class="btn-secondary" onclick="showPage('platform')">Explore Capabilities</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-light" style="padding-top:clamp(60px,8vw,96px);">
+    <div class="container">
+      <div class="label-tag">The 6-Phase Safety Governance Lifecycle</div>
+      <h2 class="section-h2 dark">A Complete Shift-Safety Intelligence Loop  Not Just an Alert System</h2>
+      <div class="section-divider divider-blue"></div>
+
+      <!-- Phase 1 -->
+      <div class="process-step">
+        <div>
+          <div class="step-num">Phase 01 · Assess</div>
+          <h3 class="step-h3">Establish Your Shift-Risk DNA Baseline</h3>
+          <p class="step-p">SentinelIQ AI ingests your site data  rota schedules, historical incident logs, staffing patterns, regional crime indices, and police response profiles  to build a comprehensive "Shift-Risk DNA" baseline for every forecourt location.</p>
+          <p class="step-p">The Assessment phase surfaces the hidden cost of unmanaged lone-worker exposure, giving you a precise, data-driven view of your "Operational Safety Gap" before any strategy is deployed.</p>
+          <div style="display:flex;flex-wrap:wrap;gap:10px;">
+            <span class="risk-badge risk-blue"><span class="risk-dot"></span>CSV / Manual Rota Setup</span>
+            <span class="risk-badge risk-light"><span class="risk-dot"></span>Baseline Risk-DNA Report</span>
+            <span class="risk-badge risk-green"><span class="risk-dot"></span>Zero Hardware Required</span>
+          </div>
+        </div>
+        <div class="step-img">
+          <div class="img-placeholder"><img src="sent10.jpg"
+               alt="Inventory Management">Phase 01 · Assess Baseline</div>
+        </div>
+      </div>
+
+      <!-- Phase 2 -->
+      <div class="process-step">
+        <div class="step-img">
+          <div class="img-placeholder"><img src="sent11.jpg" alt="Real-Time Monitoring">Phase 02 · Monitor Live</div>
+        </div>
+        <div>
+          <div class="step-num">Phase 02 · Monitor</div>
+          <h3 class="step-h3">Real-Time Shift &amp; Check-In Monitoring</h3>
+          <p class="step-p">The Monitoring Engine continuously tracks live signals  scheduled check-in intervals, lone-worker shift start/end, staffing levels, and real-time site alerts  flagging at-risk situations the moment they emerge.</p>
+          <p class="step-p">Think of it as a 24/7 safety manager watching every shift signal  objective, continuous, and immediately actionable without requiring intrusive surveillance.</p>
+          <div style="display:flex;flex-wrap:wrap;gap:10px;">
+            <span class="risk-badge risk-blue"><span class="risk-dot"></span>Live Shift Safety Dashboard</span>
+            <span class="risk-badge risk-light"><span class="risk-dot"></span>Automated Check-In Alerts</span>
+            <span class="risk-badge risk-blue"><span class="risk-dot"></span>Offline Fallback Active</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Phase 3 -->
+      <div class="process-step">
+        <div>
+          <div class="step-num">Phase 03 · Screen</div>
+          <h3 class="step-h3">Pre-Shift Risk Fingerprinting  Flag Danger Before It Happens</h3>
+          <p class="step-p">The Shift-Risk Fingerprinting engine cross-checks scheduled parameters against local crime indices, staffing levels, and historical incident patterns  computing an objective Risk Score + Confidence Level before every lone-worker shift begins.</p>
+          <div style="display:flex;flex-wrap:wrap;gap:10px;">
+            <span class="risk-badge risk-green"><span class="risk-dot"></span>Pre-Shift Safety Gate</span>
+            <span class="risk-badge risk-blue"><span class="risk-dot"></span>Plain-Language Risk Explanation</span>
+          </div>
+        </div>
+        <div class="step-img">
+          <div class="img-placeholder"><img src="sent12.jpg" alt="Pre-Shift Risk Fingerprinting">Phase 03 · Risk Fingerprinting</div>
+        </div>
+      </div>
+
+      <!-- Phase 4 -->
+      <div class="process-step">
+        <div class="step-img">
+          <div class="img-placeholder"><img src="sent13.jpg" alt="Automated Escalation">Phase 04 · Escalate &amp; Intervene</div>
+        </div>
+        <div>
+          <div class="step-num">Phase 04 · Escalate</div>
+          <h3 class="step-h3">Automated Escalation &amp; Manager Override</h3>
+          <p class="step-p">When a missed check-in is detected, the Active Safety Escalation Engine automatically fires tiered supervisor alerts, launches emergency backup workflows, and prepares compliance dossiers  shrinking response from 45 minutes to 2.2 minutes.</p>
+          <div style="display:flex;flex-wrap:wrap;gap:10px;">
+            <span class="risk-badge risk-blue"><span class="risk-dot"></span>Tiered Auto-Escalation</span>
+            <span class="risk-badge risk-light"><span class="risk-dot"></span>Manager Override + Reason Capture</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Phase 5 -->
+      <div class="process-step">
+        <div>
+          <div class="step-num">Phase 05 · Benchmark</div>
+          <h3 class="step-h3">Forecourt Intelligence Network  Learn From Every Site</h3>
+          <p class="step-p">The Forecourt Incident Intelligence Network (FIN) enables anonymised "Shift-Risk DNA" benchmarks from UK forecourt sites  so risk trends from London locations automatically optimise safety baselines for operators in Oxford or Manchester.</p>
+          <div style="display:flex;flex-wrap:wrap;gap:10px;">
+            <span class="risk-badge risk-blue"><span class="risk-dot"></span>Sector-Wide Safety Insights</span>
+            <span class="risk-badge risk-green"><span class="risk-dot"></span>Privacy-Safe Benchmarking</span>
+          </div>
+        </div>
+        <div class="step-img">
+          <div class="img-placeholder"><img src="sent14.jpg" alt="Intelligence Network">Phase 05 · Intelligence Network</div>
+        </div>
+      </div>
+
+      <!-- Phase 6 -->
+      <div class="process-step">
+        <div class="step-img">
+          <div class="img-placeholder"><img src="sent15.jpg" alt="Compliance Reporting">Phase 06 · Compliance Reporting</div>
+        </div>
+        <div>
+          <div class="step-num">Phase 06 · Report</div>
+          <h3 class="step-h3">HSE Compliance Reporting  From Safety Data to Legal Defence</h3>
+          <p class="step-p">Every shift override, check-in event, and safety intervention is delivered as a prioritised, audit-ready Compliance Performance Report  not raw data exports. Operations, HR, Risk, and Finance all receive the specific ROI evidence they need.</p>
+          <div style="display:flex;flex-wrap:wrap;gap:10px;">
+            <span class="risk-badge risk-blue"><span class="risk-dot"></span>HSE INDG73/INDG424 Audit Logs</span>
+            <span class="risk-badge risk-light"><span class="risk-dot"></span>Insurance Negotiation Evidence</span>
+            <span class="risk-badge risk-green"><span class="risk-dot"></span>100% Override Reason Logged</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+</div><!-- end page process -->
+
+
+<!-- ═══════ PAGE: FAQ ═══════ -->
+<div class="page" id="page-faq">
+  <section style="background:linear-gradient(140deg,#E8F2FA 0%,#D0E8F5 60%,#B3D8ED 100%);padding:clamp(80px,12vw,120px) 0 clamp(60px,8vw,80px);">
+    <div class="container">
+      <div class="label-tag">FAQ</div>
+      <h2 class="section-h2 dark">Frequently Asked Questions</h2>
+      <div class="section-divider divider-blue"></div>
+      <p class="para-dark" style="max-width:600px;">Everything you need to know about SentinelIQ AI and what it means for your forecourt's safety compliance, staff retention, and operational efficiency.</p>
+    </div>
+  </section>
+
+  <section class="section-light">
+    <div class="container" style="max-width:840px;">
+      <div class="faq-wrap">
+
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFAQ(this)"><h4>What is SentinelIQ AI and why does my forecourt need it?</h4><span class="faq-icon">+</span></div>
+          <div class="faq-body">SentinelIQ AI is a predictive shift-safety governance platform designed specifically for UK petrol forecourts, convenience store franchises, and multi-site fuel retail businesses. Unlike legacy CCTV systems or passive panic buttons that only react after an incident, SentinelIQ AI screens every shift before it begins  computing a Risk Score and Confidence Level based on staffing levels, historical site incidents, local crime indices, and regional police response times. This gives operators a proactive safety netting layer that protects lone workers, reduces escalation latency from 45 minutes to under 3 minutes, and builds legally auditable HSE compliance records that help negotiate lower insurance premiums.</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFAQ(this)"><h4>How quickly can we deploy SentinelIQ AI at our forecourt?</h4><span class="faq-icon">+</span></div>
+          <div class="faq-body">Deployment is designed to be immediate. In Year 1, the platform intentionally bypasses complex POS or scheduling software API integrations  instead using simple CSV or manual rota inputs. This means a pilot site can be fully operational within days, not weeks. Our baseline deployment measurement approach is specifically designed to gather clean, structured safety data from day one without waiting on corporate IT approvals. Full API integrations with dominant UK rota platforms (Deputy, Planday, Rotacloud) are introduced in Year 2 after pilot validation.</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFAQ(this)"><h4>How does the Risk Score + Confidence Level system work?</h4><span class="faq-icon">+</span></div>
+          <div class="faq-body">Before every late-night lone-worker shift, the Shift-Risk Fingerprinting engine evaluates: (1) lone-worker status and staffing levels; (2) historical site-level incident patterns; (3) local crime indices (including the 2026 62% fuel theft surge data); and (4) regional emergency services response latencies. It then computes an objective Risk Score (Low / Medium / High) paired with a Confidence Level that indicates data completeness. If underlying data is sparse or offline, the Confidence Level drops  explicitly alerting managers to data limitations and preventing a false sense of security. Every risk score is accompanied by a plain-language explanation (e.g., "High Risk: Solo evening shift during peak drive-off window with limited local visibility").</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFAQ(this)"><h4>What happens when a lone worker misses a check-in?</h4><span class="faq-icon">+</span></div>
+          <div class="faq-body">The system automatically triggers a structured, tiered escalation protocol within seconds. This includes: (1) automated direct supervisor SMS/push notification; (2) launch of emergency backup workflows; and (3) preparation of a structured incident dossier for compliance records. The entire process shrinks escalation latency from an average of 45 minutes of manual supervisor calling to under 2.2 minutes. Participating forecourts in our pilot programme demonstrated a 92% average reduction in missed check-in response times.</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFAQ(this)"><h4>Does the Manager Override feature compromise safety?</h4><span class="faq-icon">+</span></div>
+          <div class="faq-body">No  the Manager Override Feature is specifically designed to preserve managerial agency while building a legally auditable compliance trail. If a manager must override a high-risk shift warning (e.g., due to unavoidable staffing constraints), the system enforces a mandatory, structured reason-capture workflow. The manager's qualitative reasoning is permanently logged alongside the shift data  creating an unalterable audit record that can be presented to HSE inspectors and used to demonstrate that all "reasonably practicable" steps were taken to ensure worker safety.</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFAQ(this)"><h4>How does SentinelIQ AI help reduce insurance premiums?</h4><span class="faq-icon">+</span></div>
+          <div class="faq-body">Commercial insurers increasingly require demonstrable evidence of active safety governance to justify premium reductions. SentinelIQ AI generates a continuous, structured audit trail of: (1) pre-shift risk assessments with objective scores; (2) 100% logged manager override reasons; (3) verified check-in compliance records; and (4) documented escalation response times. By presenting this data to insurers as a legally defensible risk mitigation history, operators can directly negotiate lower liability and business interruption insurance premiums  delivering a measurable financial return within the 8-to-12-week pilot window.</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFAQ(this)"><h4>What are the pricing tiers for SentinelIQ AI?</h4><span class="faq-icon">+</span></div>
+          <div class="faq-body">SentinelIQ AI offers three core SaaS subscription tiers: Logic Core at £100/month per site (rules-based shift risk screening, manual check-in archiving, standard SMS escalation); DNA Architect at £380/month per site (dynamic Risk Score + Confidence Level, plain-language risk explanations, CSV rota ingestion); and Logic Sovereign at £250/month per site for regional dealer groups (automated tiered escalation, manager override with mandatory reason capture, full HSE compliance auditing dashboard). One-time fees include DNA Onboarding & API Sync (£500) and Forensic Health Assessment (£550).</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFAQ(this)"><h4>Is SentinelIQ AI compliant with UK GDPR and HSE regulations?</h4><span class="faq-icon">+</span></div>
+          <div class="faq-body">Yes. SentinelIQ AI is built on a privacy-by-design framework fully compliant with the Information Commissioner's Office (ICO) standards and UK GDPR. The platform does not engage in continuous location tracking or audio surveillance  it operates on discrete scheduling metadata and active check-in confirmations, ensuring strict data minimisation. For HSE compliance, the platform is specifically designed to support operators in demonstrating active adherence to lone-working guidelines INDG73 and INDG424, with every shift screening and override event creating an unalterable, legally defensible audit trail.</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+</div><!-- end page faq -->
+
+
+<!-- ═══════ PAGE: PRICING ═══════ -->
+<div class="page" id="page-pricing">
+  <section style="background:linear-gradient(140deg,#E8F2FA 0%,#D0E8F5 60%,#B3D8ED 100%);padding:clamp(80px,12vw,120px) 0 clamp(60px,8vw,80px);">
+    <div class="container">
+      <div class="label-tag">Pricing</div>
+      <h2 class="section-h2 dark">Transparent SaaS Pricing.<br><span style="color:var(--blue-dark);">ROI Validated Within 8–12 Weeks.</span></h2>
+      <div class="section-divider divider-blue"></div>
+      <p class="para-dark" style="max-width:680px;">Every tier is designed to deliver a measurable operational return on investment within 8 to 12 weeks of pilot deployment  reducing emergency escalation latency, achieving 100% check-in compliance, and generating legally auditable HSE compliance logs that lower insurance premiums.</p>
+    </div>
+  </section>
+
+  <section class="section-light">
+    <div class="container">
+      <div class="pricing-grid">
+
+        <div class="price-card">
+          <div class="price-tier">Tier 01</div>
+          <div class="price-title">Logic Core</div>
+          <div class="price-amount">£100<span>/month per site</span></div>
+          <p class="price-desc">Rules-based safety governance for independent petrol forecourts and local conveniences running lone-worker evening shifts.</p>
+          <ul class="price-features">
+            <li>Rules-based shift risk screening</li>
+            <li>Default baseline safety templates</li>
+            <li>Manual lone-worker check-in archiving</li>
+            <li>Standard SMS escalation alerts</li>
+            <li>CSV rota data ingestion</li>
+            <li>Basic HSE compliance log</li>
+            <li>Offline fallback mechanisms</li>
+          </ul>
+          <button class="btn-secondary" style="width:100%;justify-content:center;" onclick="showPage('contact')">Start Logic Core →</button>
+        </div>
+
+        <div class="price-card featured">
+          <div class="featured-label">Most Popular</div>
+          <div class="price-tier">Tier 02</div>
+          <div class="price-title">DNA Architect</div>
+          <div class="price-amount">£380<span>/month per site</span></div>
+          <p class="price-desc">Dynamic predictive risk intelligence for multi-site forecourts and high-risk retail operators requiring real-time shift-level safety governance.</p>
+          <ul class="price-features">
+            <li>Dynamic Risk Score + Confidence Level algorithm</li>
+            <li>Plain-language risk explanations</li>
+            <li>Editable site-risk profiles</li>
+            <li>Simplified CSV / manual rota ingestion</li>
+            <li>Active safety escalation pathways</li>
+            <li>Manager override with reason capture</li>
+            <li>Full HSE compliance auditing dashboard</li>
+            <li>Outcome-learning safety memory</li>
+          </ul>
+          <button class="btn-primary" style="width:100%;justify-content:center;" onclick="showPage('contact')">Start DNA Architect →</button>
+        </div>
+
+        <div class="price-card">
+          <div class="price-tier">Tier 03</div>
+          <div class="price-title">Logic Sovereign</div>
+          <div class="price-amount">£250<span>/month per site</span></div>
+          <p class="price-desc">Enterprise-grade multi-site safety governance for regional dealer groups and franchise operations requiring centralised compliance oversight.</p>
+          <ul class="price-features">
+            <li>Automated tiered active safety escalation</li>
+            <li>Manager override with mandatory reason capture</li>
+            <li>Full HSE compliance auditing dashboard</li>
+            <li>Priority emergency response routing</li>
+            <li>Cross-site risk benchmarking dashboard</li>
+            <li>Forecourt Intelligence Network (FIN) access</li>
+            <li>Dedicated customer success manager</li>
+          </ul>
+          <button class="btn-secondary" style="width:100%;justify-content:center;" onclick="showPage('contact')">Start Logic Sovereign →</button>
+        </div>
+
+      </div>
+
+      <!-- Add-ons -->
+      <div style="margin-top:56px;">
+        <div class="label-tag">Professional Add-Ons</div>
+        <h2 class="section-h2 dark" style="margin-bottom:8px;">One-Time Professional Services</h2>
+        <div class="section-divider divider-blue"></div>
+        <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:28px;margin-top:32px;" class="addons-grid">
+          <div class="price-card">
+            <div class="price-tier">Add-On 01</div>
+            <div class="price-title">DNA Onboarding &amp; API Sync</div>
+            <div class="price-amount">£500<span> one-time</span></div>
+            <p class="price-desc">Complete site-profile configuration, escalation matrix calibration, and initial CSV/manual data intake setup  bypassing corporate IT delays.</p>
+            <ul class="price-features">
+              <li>Custom escalation matrix setup</li>
+              <li>CSV intake parameters calibration</li>
+              <li>Rota parameter configuration</li>
+              <li>Onboarding training for site managers</li>
+            </ul>
+            <button class="btn-secondary" style="width:100%;justify-content:center;" onclick="showPage('contact')">Add Onboarding →</button>
+          </div>
+          <div class="price-card">
+            <div class="price-tier">Add-On 02</div>
+            <div class="price-title">Forensic Health Assessment</div>
+            <div class="price-amount">£550<span> one-time</span></div>
+            <p class="price-desc">Retrospective audit of historical check-in failures and safety logs, combined with specialist manager-level Preventive Safety Ops training.</p>
+            <ul class="price-features">
+              <li>Historical incident pattern audit</li>
+              <li>Custom manager Preventive Safety Ops training</li>
+              <li>Operational safety protocol refinement</li>
+              <li>HSE gap analysis report</li>
+            </ul>
+            <button class="btn-secondary" style="width:100%;justify-content:center;" onclick="showPage('contact')">Add Assessment →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div><!-- end page pricing -->
+
+
+<!-- ═══════ PAGE: CONTACT ═══════ -->
+<div class="page" id="page-contact">
+  <section style="background:linear-gradient(140deg,#001A33 0%,#003366 60%,#0075C4 100%);padding:clamp(80px,12vw,120px) 0 clamp(60px,8vw,80px);">
+    <div class="container">
+      <div class="label-tag-white">Contact & Demo</div>
+      <h2 class="section-h2 white">Request a Platform Demo.<br>See SentinelIQ AI Live on Your Forecourt Data.</h2>
+      <div class="section-divider divider-white"></div>
+      <p class="para-light" style="max-width:600px;">Our personalised demos show your forecourt's actual Shift-Risk Fingerprint, live escalation dashboard, and compliance audit trail  using your real operational context, not generic examples. We demonstrate exactly how the platform reduces lone-worker risk and delivers measurable ROI within 8 to 12 weeks.</p>
+    </div>
+  </section>
+
+  <section class="section-light">
+    <div class="container">
+      <div class="contact-wrap">
+
+        <!-- CONTACT FORM -->
+        <div class="contact-form">
+          <h3>Book Your Platform Demo</h3>
+          <p>Fill in your details and our Safety Success team will contact you within 24 hours.</p>
+
+          <form action="https://api.web3forms.com/submit" method="POST">
+            <input type="hidden" name="access_key" value="14d7e6d8-8700-41ad-ad95-b3d2b704848b">
+            <input type="hidden" name="subject" value="New SentinelIQ AI Demo Request">
+            <input type="hidden" name="from_name" value="SentinelIQ AI Website">
+
+            <div class="form-group">
+              <label>Full Name *</label>
+              <input type="text" name="name" placeholder="Your full name" required>
+            </div>
+
+            <div class="form-group">
+              <label>Email Address *</label>
+              <input type="email" name="email" placeholder="your@forecourt.co.uk" required>
+            </div>
+
+            <div class="form-group">
+              <label>Phone Number</label>
+              <input type="tel" name="phone" placeholder="+44 7XXX XXXXXX">
+            </div>
+
+            <div class="form-group">
+              <label>Business / Organisation Name</label>
+              <input type="text" name="business_name" placeholder="Your forecourt or convenience group name">
+            </div>
+
+            <div class="form-group">
+              <label>Business Type</label>
+              <select name="business_type">
+                <option>Independent Petrol Forecourt</option>
+                <option>Multi-Site Petrol Franchise</option>
+                <option>Standalone 24/7 Convenience Store</option>
+                <option>Commercial Truck Stop & Fleet Depot</option>
+                <option>Regional Dealer Group</option>
+                <option>Other</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label>What are you most interested in?</label>
+              <textarea name="message" placeholder="Tell us about your lone-worker safety challenges, current security tools, or the features you'd like to explore..." required></textarea>
+            </div>
+
+            <button class="btn-primary" style="width:100%;justify-content:center;" type="submit">Request Demo →</button>
+          </form>
+        </div>
+
+        <!-- CONTACT INFO -->
+        <div class="contact-info">
+          <h3>Why Book a Demo?</h3>
+          <p>Our personalised demos show your forecourt's actual Shift-Risk baseline, live escalation dashboard, and compliance audit trail  using your real operational context, not generic examples. We demonstrate how the Shift-Risk Fingerprinting engine, Active Safety Escalation workflows, and Manager Override Compliance system work together to reduce lone-worker vulnerability, protect margins, and lower insurance premiums in real time.</p>
+
+          <div class="contact-detail">
+            <div class="icon"><i class="fas fa-envelope"></i></div>
+            <div class="text">
+              <strong>Email Us</strong>
+              <span>sentineliqaiuk@outlook.com</span>
+            </div>
+          </div>
+
+          <div class="contact-detail">
+            <div class="icon"><i class="fas fa-phone"></i></div>
+            <div class="text">
+              <strong>Phone</strong>
+              <span>Vamsi Krishna Kotha · Founder & CTO</span>
+            </div>
+          </div>
+
+          <div class="contact-detail">
+            <div class="icon"><i class="fas fa-map-marker-alt"></i></div>
+            <div class="text">
+              <strong>UK Headquarters</strong>
+              <span>London & Hertfordshire, United Kingdom</span>
+            </div>
+          </div>
+
+          <div class="contact-detail">
+            <div class="icon"><i class="fas fa-clock"></i></div>
+            <div class="text">
+              <strong>Response Time</strong>
+              <span>Within 24 hours · Mon–Fri 9am–6pm GMT</span>
+            </div>
+          </div>
+
+          <div class="contact-detail">
+            <div class="icon"><i class="fas fa-shield-alt"></i></div>
+            <div class="text">
+              <strong>Data Privacy</strong>
+              <span>UK GDPR · ICO Compliant · Privacy-by-Design</span>
+            </div>
+          </div>
+
+          <div class="contact-detail">
+            <div class="icon"><i class="fas fa-certificate"></i></div>
+            <div class="text">
+              <strong>Pilot Programme</strong>
+              <span>8–12 Week ROI Validated · 3–5 Sites · London & Essex</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+</div><!-- end page contact -->
+
+
+<!-- ═══════ FOOTER ═══════ -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">SentinelIQ AI</div>
+        <p class="footer-desc">The UK's first Predictive Shift-Safety Governance Platform  screening, escalating, and protecting every lone-worker evening shift in real time. See Threats. Stop Risks. Secure Tomorrow. Predict. Intervene. Protect.</p>
+        <div class="footer-badges">
+          <span class="footer-badge">UK GDPR Compliant</span>
+          <span class="footer-badge">ICO Registered</span>
+          <span class="footer-badge">HSE INDG73 Aligned</span>
+          <span class="footer-badge">ESG Impact Ready</span>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Platform</div>
+        <div class="footer-col">
+          <a onclick="showPage('platform')">Shift-Risk Fingerprinting</a>
+          <a onclick="showPage('platform')">Active Safety Escalation Engine</a>
+          <a onclick="showPage('platform')">Manager Override + Reason Capture</a>
+          <a onclick="showPage('platform')">Risk Score + Confidence Level</a>
+          <a onclick="showPage('platform')">Forecourt Intelligence Network</a>
+          <a onclick="showPage('platform')">HSE Compliance Dashboard</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Company</div>
+        <div class="footer-col">
+          <a onclick="showPage('about')">About SentinelIQ AI</a>
+          <a onclick="showPage('about')">Vamsi Krishna Kotha · Founder</a>
+          <a onclick="showPage('about')">Sriveni Gaddam · Co-Founder</a>
+          <a onclick="showPage('process')">How It Works</a>
+          <a onclick="showPage('faq')">FAQ</a>
+          <a onclick="showPage('market')">Market Analysis</a>
+          <a onclick="showPage('pricing')">Pricing & Plans</a>
+          <a onclick="showPage('contact')">Request a Demo</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Solutions</div>
+        <div class="footer-col">
+          <a onclick="showPage('platform')">Independent Petrol Forecourts</a>
+          <a onclick="showPage('platform')">Multi-Site Franchise Networks</a>
+          <a onclick="showPage('platform')">24/7 Convenience Stores</a>
+          <a onclick="showPage('platform')">Regional Dealer Groups</a>
+          <a onclick="showPage('pricing')">Logic Core · £100/mo</a>
+          <a onclick="showPage('pricing')">DNA Architect · £380/mo</a>
+          <a onclick="showPage('pricing')">Logic Sovereign · £250/mo</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom-bar">
+      <p>© 2026 <span>SentinelIQ AI</span> · London & Hertfordshire, UK · UK GDPR Compliant · by Vamsi Krishna Kotha & Sriveni Gaddam</p>
+      <div class="footer-bottom-links">
+        <a onclick="showPage('contact')">Privacy Policy</a>
+        <a onclick="showPage('contact')">Terms of Service</a>
+        <a onclick="showPage('contact')">Confidential Business Plan</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+<!-- ═══════════ JAVASCRIPT ═══════════ -->
+<script>
+/* ─── PAGE NAV ───────────────────────────────── */
+function showPage(name){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-links button').forEach(b=>b.classList.remove('active'));
+  const pg=document.getElementById('page-'+name);
+  if(pg){pg.classList.add('active');}
+  const btn=document.getElementById('nav-'+name);
+  if(btn){btn.classList.add('active');}
+  window.scrollTo({top:0,behavior:'instant'});
+  if(name==='market'&&!window.marketChartsLoaded){initMarketCharts();window.marketChartsLoaded=true;}
+}
+
+function toggleCard(btn){
+  const card=btn.closest('.platform-card');
+  card.classList.toggle('open');
+  btn.innerHTML=card.classList.contains('open')?'Show Less':'Learn More';
+}
+
+function toggleFAQ(el){el.parentElement.classList.toggle('open');}
+
+function closeMobile(){
+  document.getElementById('mobileNav').classList.remove('open');
+  document.getElementById('hamburger').classList.remove('open');
+}
+
+document.getElementById('hamburger').addEventListener('click',function(){
+  this.classList.toggle('open');
+  document.getElementById('mobileNav').classList.toggle('open');
+});
+
+/* ─── CHART THEME ────────────────────────────── */
+const BLU='rgba(0,117,196,1)';
+const BLU2='rgba(0,117,196,0.7)';
+const BLU3='rgba(0,117,196,0.35)';
+const LBLU='rgba(0,194,204,0.85)';
+const LBLU2='rgba(0,194,204,0.45)';
+const GRID='rgba(0,117,196,0.08)';
+const MUTED='rgba(26,58,92,0.8)';
+
+Chart.defaults.font.family="'IBM Plex Mono', monospace";
+Chart.defaults.font.size=11;
+Chart.defaults.color=MUTED;
+
+/* ─── MARKET CHARTS ──────────────────────────── */
+function initMarketCharts(){
+  // UK Forecourt SAM by Segment
+  new Chart(document.getElementById('chartSector').getContext('2d'),{
+    type:'bar',
+    data:{
+      labels:['Independent Forecourts','Multi-Site Franchises','24/7 Convenience Stores','Truck Stop & Fleet Depots'],
+      datasets:[{
+        label:'SAM Opportunity (£ Millions)',
+        data:[145,92,68,45],
+        backgroundColor:[BLU,BLU2,BLU3,LBLU],
+        borderRadius:6,barPercentage:0.6
+      }]
+    },
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{display:false},ticks:{color:MUTED}},y:{grid:{color:GRID},ticks:{color:MUTED,callback:v=>'£'+v+'M'}}}}
+  });
+
+  // Pain Points Doughnut
+  new Chart(document.getElementById('chartRootCause').getContext('2d'),{
+    type:'doughnut',
+    data:{
+      labels:['Fuel Theft Surge 62% (41%)','Staff Anxiety / Turnover (27%)','Manual Check-In Overhead (20%)','Delayed Escalation >45min (12%)'],
+      datasets:[{
+        data:[41,27,20,12],
+        backgroundColor:[BLU,BLU2,BLU3,LBLU],
+        borderColor:['rgba(0,117,196,0.9)','rgba(0,117,196,0.7)','rgba(0,117,196,0.4)','rgba(0,194,204,0.8)'],
+        borderWidth:1.5
+      }]
+    },
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{color:MUTED,boxWidth:10,padding:10,font:{size:10}}}}}
+  });
+
+  // Radar Competitive
+  new Chart(document.getElementById('chartRadar').getContext('2d'),{
+    type:'radar',
+    data:{
+      labels:['Pre-Shift Risk Screening','Auto Check-In Escalation','Manager Override Logs','HSE Compliance Audit','Offline Fallback','UK Forecourt Tuning'],
+      datasets:[
+        {label:'SentinelIQ AI',data:[5,5,5,5,5,5],backgroundColor:'rgba(0,117,196,0.1)',borderColor:BLU,borderWidth:2,pointBackgroundColor:BLU},
+        {label:'Rota Platforms (Deputy)',data:[1,0,1,1,2,2],backgroundColor:'rgba(0,194,204,0.06)',borderColor:LBLU,borderWidth:1.5,pointBackgroundColor:LBLU},
+        {label:'CCTV / ARCs (Verisure)',data:[0,1,0,1,1,1],backgroundColor:'rgba(0,194,204,0.05)',borderColor:'rgba(0,194,204,0.5)',borderWidth:1.5,pointBackgroundColor:'rgba(0,194,204,0.5)'},
+        {label:'Lone-Worker Apps (Peoplesafe)',data:[0,2,1,2,1,1],backgroundColor:'rgba(26,58,92,0.05)',borderColor:'rgba(26,58,92,0.4)',borderWidth:1.5,pointBackgroundColor:'rgba(26,58,92,0.4)'},
+      ]
+    },
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{color:MUTED,boxWidth:10,padding:14,font:{size:10}}}},scales:{r:{backgroundColor:'rgba(0,117,196,0.01)',grid:{color:GRID},pointLabels:{color:MUTED,font:{size:10}},ticks:{display:false},min:0,max:5}}}
+  });
+
+  // Market Growth
+  new Chart(document.getElementById('chartGrowth').getContext('2d'),{
+    type:'bar',
+    data:{
+      labels:['2022','2023','2024','2025','2026','2027','2028','2030'],
+      datasets:[
+        {label:'Global Lone-Worker Safety Market (USD B)',data:[0.8,1.0,1.25,1.6,2.0,2.6,3.2,4.8],backgroundColor:BLU2,borderRadius:5,barPercentage:0.55},
+        {type:'line',label:'UK SafetyTech Adoption %',data:[null,3,6,10,18,28,40,60],borderColor:LBLU,borderWidth:2,yAxisID:'y2',tension:0.4,pointBackgroundColor:LBLU,fill:false}
+      ]
+    },
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{color:MUTED,boxWidth:10,padding:12,font:{size:10}}}},scales:{x:{grid:{color:GRID},ticks:{color:MUTED}},y:{grid:{color:GRID},ticks:{color:MUTED,callback:v=>'$'+v+'B'}},y2:{position:'right',grid:{display:false},ticks:{color:MUTED,callback:v=>v+'%'}}}}
+  });
+
+  // Performance Comparison
+  new Chart(document.getElementById('chartPerf').getContext('2d'),{
+    type:'bar',
+    data:{
+      labels:['Pre-Shift Risk Screening','Auto Escalation on Missed Check-In','Manager Override Compliance','HSE Audit Readiness','Offline Fallback Resilience','UK Forecourt Intelligence'],
+      datasets:[
+        {label:'SentinelIQ AI',data:[97,95,98,99,94,96],backgroundColor:BLU2,borderRadius:5,barPercentage:0.35},
+        {label:'Market Average (Legacy Tools)',data:[3,2,5,4,3,2],backgroundColor:LBLU2,borderRadius:5,barPercentage:0.35}
+      ]
+    },
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{color:MUTED,boxWidth:10,padding:14,font:{size:10}}}},scales:{x:{grid:{color:GRID},ticks:{color:MUTED,font:{size:9}}},y:{grid:{color:GRID},ticks:{color:MUTED,callback:v=>v+' pts'}}}}
+  });
+}
+</script>
+</body>
+</html>
